@@ -7,6 +7,7 @@ on property:vendor.post_boot.parsed=1
     exec u:r:magisk:s0 root root -- /init.renderzenith.sh
     
 on init
+	#Disable Co-Location
     write /dev/stune/schedtune.colocate 0
     write /dev/stune/background/schedtune.colocate 0
     write /dev/stune/system-background/schedtune.colocate 0
