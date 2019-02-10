@@ -1,6 +1,6 @@
 #!/system/bin/sh
 
-sleep 25;
+sleep 35;
 
 # Applying RenderZenith Settings
 
@@ -19,18 +19,14 @@ sleep 25;
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
 
-# Set CPU Freq to lowest possible
-        echo 300000 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-        echo 825000 > /sys/devices/system/cpu/cpufreq/policy4/scaling_min_freq
-
 # Input boost and stune configuration
 	echo "0:1056000 1:0 2:0 3:0 4:1056000 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
 	echo 500 > /sys/module/cpu_boost/parameters/input_boost_ms
-	echo 15 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
+	echo 50 > /sys/module/cpu_boost/parameters/dynamic_stune_boost
 	echo 1500 > /sys/module/cpu_boost/parameters/dynamic_stune_boost_ms
 
 # Dynamic Stune Boost during sched_boost
-	echo 15 > /dev/stune/top-app/schedtune.sched_boost
+	echo 50 > /dev/stune/top-app/schedtune.sched_boost
 
 # Disable Boost_No_Override
 	echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
