@@ -19,6 +19,10 @@ sleep 35;
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
 
+# Disable Boost_No_Override
+	echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
+	echo 0 > /dev/stune/top-app/schedtune.sched_boost_no_override
+
 # Input boost and stune configuration
 	echo "0:1056000 1:0 2:0 3:0 4:1056000 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
 	echo 500 > /sys/module/cpu_boost/parameters/input_boost_ms
@@ -28,10 +32,6 @@ sleep 35;
 # Dynamic Stune Boost during sched_boost
 	echo 50 > /dev/stune/top-app/schedtune.sched_boost
 
-# Disable Boost_No_Override
-	echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
-	echo 0 > /dev/stune/top-app/schedtune.sched_boost_no_override
-
 # Set default schedTune value for foreground/top-app
 	echo 1 > /dev/stune/foreground/schedtune.prefer_idle
 	echo 0 > /dev/stune/top-app/schedtune.boost
@@ -39,9 +39,6 @@ sleep 35;
 
 # Enable PEWQ
 	echo Y > /sys/module/workqueue/parameters/power_efficient
-
-# Disable Touchboost
-	echo 0 > /sys/module/msm_performance/parameters/touchboost
 
 # Disable CAF task placement for Big Cores
 	echo 0 > /proc/sys/kernel/sched_walt_rotate_big_tasks
