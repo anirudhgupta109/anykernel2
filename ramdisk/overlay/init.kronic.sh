@@ -1,6 +1,6 @@
 #!/system/bin/sh
 
-sleep 35;
+sleep 20;
 
 # Applying RenderZenith Settings
 
@@ -18,10 +18,6 @@ sleep 35;
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/iowait_boost_enable
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/pl
 	echo 0 > /sys/devices/system/cpu/cpufreq/policy4/schedutil/hispeed_freq
-
-# Disable Boost_No_Override
-	echo 0 > /dev/stune/foreground/schedtune.sched_boost_no_override
-	echo 0 > /dev/stune/top-app/schedtune.sched_boost_no_override
 
 # Input boost and stune configuration
 	echo "0:1056000 1:0 2:0 3:0 4:1056000 5:0 6:0 7:0" > /sys/module/cpu_boost/parameters/input_boost_freq
