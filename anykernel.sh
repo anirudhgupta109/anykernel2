@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=IllusionKernel by anirudhgupta109!
+kernel.string=IllusionKernel by anirudhgupta109
 do.devicecheck=1
 do.modules=0
 do.cleanup=1
@@ -22,16 +22,30 @@ ramdisk_compression=auto;
 # import patching functions/variables - see for reference
 . /tmp/anykernel/tools/ak2-core.sh;
 
-
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
 chmod -R 750 $ramdisk/*;
 chown -R root:root $ramdisk/*;
 
+## begin vendor changes
+mount -o rw,remount -t auto /system >/dev/null;
+
+# Make a backup
+restore_file /system/etc/init/hw/init.target.rc;
+
+# Do work
+replace_string /system/etc/init/hw/init.target.rc "write /dev/stune/top-app/schedtune.colocate 0" "write /dev/stune/top-app/schedtune.colocate 1" "write /dev/stune/top-app/schedtune.colocate 0";
+replace_string /system/etc/init/hw/init.target.rc "write /dev/stune/foreground/schedtune.sched_boost_no_override 0" "write /dev/stune/foreground/schedtune.sched_boost_no_override 1" "write /dev/stune/foreground/schedtune.sched_boost_no_override 0";
+replace_string /system/etc/init/hw/init.target.rc "write /dev/stune/top-app/schedtune.sched_boost_no_override 0" "write /dev/stune/top-app/schedtune.sched_boost_no_override 1" "write /dev/stune/top-app/schedtune.sched_boost_no_override 0";
+
+# Cleanup previous performance additions
+remove_section /system/etc/init/hw/init.target.rc "##START_RZ" "##END_RZ";
+
+# Add performance tweaks
+append_file /system/etc/init/hw/init.target.rc "R4ND0MSTR1NG" init.target.rc ;
 
 ## AnyKernel install
 dump_boot;
-
 
 # Add skip_override parameter to cmdline so user doesn't have to reflash Magisk
 if [ -d $ramdisk/.backup ]; then
@@ -40,17 +54,6 @@ if [ -d $ramdisk/.backup ]; then
 else
   patch_cmdline "skip_override" "";
 fi;
-
-
-# Clean up other kernels' ramdisk overlay files
-#rm -rf $ramdisk/overlay;
-
-
-# Add our ramdisk files if Magisk is installed
-#if [ -d $ramdisk/.backup ]; then
-#  mv /tmp/anykernel/overlay $ramdisk;
-#fi
-
 
 # Install the boot image
 write_boot;
