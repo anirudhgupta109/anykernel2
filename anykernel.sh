@@ -27,23 +27,6 @@ ramdisk_compression=auto;
 chmod -R 750 $ramdisk/*;
 chown -R root:root $ramdisk/*;
 
-## begin vendor changes
-mount -o rw,remount -t auto /system >/dev/null;
-
-# Make a backup
-restore_file /system/etc/init/init.target.rc;
-
-# Do work
-replace_string /system/etc/init/init.target.rc "write /dev/stune/top-app/schedtune.colocate 0" "write /dev/stune/top-app/schedtune.colocate 1" "write /dev/stune/top-app/schedtune.colocate 0";
-replace_string /system/etc/init/init.target.rc "write /dev/stune/foreground/schedtune.sched_boost_no_override 0" "write /dev/stune/foreground/schedtune.sched_boost_no_override 1" "write /dev/stune/foreground/schedtune.sched_boost_no_override 0";
-replace_string /system/etc/init/init.target.rc "write /dev/stune/top-app/schedtune.sched_boost_no_override 0" "write /dev/stune/top-app/schedtune.sched_boost_no_override 1" "write /dev/stune/top-app/schedtune.sched_boost_no_override 0";
-
-# Cleanup previous performance additions
-remove_section /system/etc/init/init.target.rc "##START_RZ" "##END_RZ";
-
-# Add performance tweaks
-append_file /system/etc/init/init.target.rc "R4ND0MSTR1NG" init.target.rc ;
-
 ## AnyKernel install
 dump_boot;
 
