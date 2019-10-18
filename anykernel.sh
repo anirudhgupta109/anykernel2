@@ -11,9 +11,9 @@ do.cleanup=1
 do.cleanuponabort=0
 device.name1=OnePlus7T
 device.name2=OnePlus7
-device.name1=OnePlus7Pro
-device.name1=guacamole
-device.name1=hotdogb
+device.name3=OnePlus7Pro
+device.name4=guacamole
+device.name5=hotdogb
 supported.versions=
 supported.patchlevels=
 '; } # end properties
